@@ -26,13 +26,17 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "data_lake" {
   }
 }
 
-# Lifecycle configuration
+# Lifecycle configuration - FIXED
 resource "aws_s3_bucket_lifecycle_configuration" "data_lake" {
   bucket = aws_s3_bucket.data_lake.id
 
   rule {
     id     = "medallion_lifecycle"
     status = "Enabled"
+    
+    filter {
+      prefix = ""
+    }
 
     transition {
       days          = 30
